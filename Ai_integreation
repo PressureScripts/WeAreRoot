@@ -1,0 +1,30 @@
+import random
+import logging
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def train_evasion_model():
+    # Sample data: [file_size, is_sensitive], 1 means encrypt, 0 means do not encrypt
+    X = np.array([[100, 1], [200, 0], [150, 1], [300, 0]])
+    y = np.array([1, 0, 1, 0])
+    model = RandomForestClassifier()
+    model.fit(X, y)
+    return model
+
+def simulate_evasion_behavior(model, file_size, is_sensitive):
+    prediction = model.predict([[file_size, is_sensitive]])[0]
+    if prediction == 1:
+        logging.info(f"Simulated encryption decision: Encrypt (file_size={file_size}, is_sensitive={is_sensitive})")
+    else:
+        logging.info(f"Simulated encryption decision: Do not Encrypt (file_size={file_size}, is_sensitive={is_sensitive})")
+
+if __name__ == "__main__":
+    logging.info("Training evasion model...")
+    model = train_evasion_model()
+    logging.info("Starting evasion behavior simulation...")
+    # Simulate decisions
+    simulate_evasion_behavior(model, 120, 1)
+    simulate_evasion_behavior(model, 250, 0)
