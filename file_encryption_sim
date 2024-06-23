@@ -1,0 +1,22 @@
+import os
+import shutil
+import logging
+
+# Directory to simulate ransomware encryption
+TARGET_DIR = "test_files"
+ENCRYPTED_EXTENSION = ".encrypted"
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def simulate_encryption(target_dir):
+    for root, dirs, files in os.walk(target_dir):
+        for file in files:
+            original_file = os.path.join(root, file)
+            encrypted_file = original_file + ENCRYPTED_EXTENSION
+            shutil.copyfile(original_file, encrypted_file)
+            logging.info(f"Simulated encryption: {original_file} -> {encrypted_file}")
+
+if __name__ == "__main__":
+    logging.info("Starting file encryption simulation...")
+    simulate_encryption(TARGET_DIR)
